@@ -7,7 +7,9 @@ Release:	1
 License:	GPL (?)
 Group:		Applications/Dictionaries
 Source0:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.index
+# Source0-md5:	f319c97dd99a8890f27d947b23820e8f
 Source1:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.utf.dz
+# Source1-md5:	e96b030c7814d8ee9dbd30cd039e5f70
 URL:		http://vietlug.sourceforge.net/
 Requires:	dictd
 Requires:	%{_sysconfdir}/dictd
