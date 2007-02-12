@@ -1,6 +1,6 @@
 %define		dictname anhviet
 Summary:	English-Vietnamese dictionary for dictd
-Summary(pl):	S³ownik angielsko-wietnamski dla dictd
+Summary(pl.UTF-8):   SÅ‚ownik angielsko-wietnamski dla dictd
 Name:		dict-%{dictname}
 Version:	1.0
 Release:	3
@@ -18,8 +18,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 English-Vietnamese dictionary for dictd.
 
-%description -l pl
-S³ownik angielsko-wietnamski dla dictd.
+%description -l pl.UTF-8
+SÅ‚ownik angielsko-wietnamski dla dictd.
 
 %prep
 
