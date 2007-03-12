@@ -3,7 +3,7 @@ Summary:	English-Vietnamese dictionary for dictd
 Summary(pl.UTF-8):	Słownik angielsko-wietnamski dla dictd
 Name:		dict-%{dictname}
 Version:	1.0
-Release:	3
+Release:	4
 License:	GPL (?)
 Group:		Applications/Dictionaries
 Source0:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.index
@@ -11,6 +11,7 @@ Source0:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.index
 Source1:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.utf.dz
 # Source1-md5:	e96b030c7814d8ee9dbd30cd039e5f70
 URL:		http://vietlug.sourceforge.net/
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	%{_sysconfdir}/dictd
 Requires:	dictd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -41,13 +42,11 @@ database %{dictname} {
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if [ -f /var/lock/subsys/dictd ]; then
-	/etc/rc.d/init.d/dictd restart 1>&2
-fi
+%service -q dictd restart
 
 %postun
-if [ -f /var/lock/subsys/dictd ]; then
-	/etc/rc.d/init.d/dictd restart 1>&2 || true
+if [ "$1" = 0 ]; then
+	%service -q dictd restart
 fi
 
 %files
