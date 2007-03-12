@@ -3,7 +3,7 @@ Summary:	English-Vietnamese dictionary for dictd
 Summary(pl):	S³ownik angielsko-wietnamski dla dictd
 Name:		dict-%{dictname}
 Version:	1.0
-Release:	3
+Release:	4
 License:	GPL (?)
 Group:		Applications/Dictionaries
 Source0:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.index
@@ -11,8 +11,9 @@ Source0:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.index
 Source1:	http://vietlug.sourceforge.net/download/emacs/%{dictname}.utf.dz
 # Source1-md5:	e96b030c7814d8ee9dbd30cd039e5f70
 URL:		http://vietlug.sourceforge.net/
-Requires:	dictd
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	%{_sysconfdir}/dictd
+Requires:	dictd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,16 +42,14 @@ database %{dictname} {
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if [ -f /var/lock/subsys/dictd ]; then
-	/etc/rc.d/init.d/dictd restart 1>&2
-fi
+%service -q dictd restart
 
 %postun
-if [ -f /var/lock/subsys/dictd ]; then
-	/etc/rc.d/init.d/dictd restart 1>&2 || true
+if [ "$1" = 0 ]; then
+	%service -q dictd restart
 fi
 
 %files
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/dictd/%{dictname}.dictconf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dictd/%{dictname}.dictconf
 %{_datadir}/dictd/%{dictname}.*
